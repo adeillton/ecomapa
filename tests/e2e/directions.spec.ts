@@ -1,0 +1,21 @@
+import { test, expect } from '@playwright/test'
+test('detalhes mostram fonte, data e rota sem origem do usuário', async ({ page, context }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Continuar sem localização' }).click()
+  await page.getByRole('list', { name: 'Destinos de descarte' }).getByRole('button', { name: 'Ver detalhes de Casas Bahia, Garanhuns' }).click()
+  await expect(page.getByRole('heading', { name: 'Casas Bahia, Garanhuns' })).toBeVisible()
+  await expect(page.getByText('14/09/2026', { exact: true })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Ambipar/ })).toHaveAttribute('href', /reciclelog/)
+  const route = page.getByRole('link', { name: /Como chegar/ })
+  const url = new URL((await route.getAttribute('href'))!)
+  expect(url.origin + url.pathname).toBe('https://www.google.com/maps/dir/')
+  expect(url.searchParams.get('api')).toBe('1')
+  expect(url.searchParams.get('destination')).toBe('-8.8919548,-36.495584')
+  expect(url.searchParams.has('origin')).toBe(false)
+  await context.route('https://www.google.com/maps/dir/**', route => route.fulfill({ body: 'Destino externo de teste' }))
+  const popupPromise = page.waitForEvent('popup')
+  await route.click()
+  const popup = await popupPromise
+  await popup.waitForLoadState()
+  expect(new URL(popup.url()).searchParams.get('destination')).toBe('-8.8919548,-36.495584')
+})
