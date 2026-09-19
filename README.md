@@ -4,6 +4,20 @@ Aplicação web para encontrar pontos de entrega e serviços de retirada de res�
 
 **Site publicado:** https://ecomapa-garanhuns.pages.dev/
 
+## Telas
+
+Abertura no desktop, enquadrando toda a cobertura do Agreste. Marcadores sobrepostos viram um grupo que diz a quantidade e abre a lista dos destinos, cada um com o mesmo número que aparece na lista lateral.
+
+![Mapa do Agreste no desktop com a lista de um grupo de pontos aberta](screenshots/desktop.png)
+
+Detalhes de um destino: itens confirmados pela fonte, categorias, endereço, o que a fonte não informa e a rota.
+
+![Detalhes de um ponto, com itens confirmados, endereço e avisos](screenshots/detalhe.png)
+
+No celular o mapa ocupa a tela inteira e a lista sobe como painel.
+
+![Aplicativo no celular, com o mapa ao fundo e o painel de destinos aberto](screenshots/celular.png)
+
 ## Stack e instalação
 
 React 19, TypeScript estrito, Vite 8, Tailwind 4, Lucide, MapLibre 6, OpenFreeMap, Zod, Vitest e Playwright. Node 24 e npm; versões resolvidas no lockfile. Sem chave de API ou variáveis de ambiente obrigatórias.
